@@ -7,3 +7,7 @@
     color: var(--text-light);
   }
   
+  .theme-switcher:hover {
+    background: var(--accent);
+  }
+  
