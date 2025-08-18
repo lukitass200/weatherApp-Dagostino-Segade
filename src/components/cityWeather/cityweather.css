@@ -1,0 +1,20 @@
+.city-weather {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .city-weather h4 {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .city-weather p {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  

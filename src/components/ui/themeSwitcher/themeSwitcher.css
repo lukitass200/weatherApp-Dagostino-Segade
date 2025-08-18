@@ -1,0 +1,13 @@
+.theme-switcher {
+    background: var(--card-bg);
+    border: 1px solid var(--accent);
+    padding: 6px 14px;
+    border-radius: 8px;
+    margin-left: 12px;
+    color: var(--text-light);
+  }
+  
+  .theme-switcher:hover {
+    background: var(--accent);
+  }
+  
