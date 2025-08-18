@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { WeatherContext } from "../../context/weatherContext";
 import { getHourlyForecast } from "../../services/weatherApi";
-import "./dailyForecast.css"
+import "./dailyForecast.css";
+import { getWeatherIcon } from "../../utils/getWeatherIcon.js";
 
 const DailyForecast = () => {
   const { unit, lastCity } = useContext(WeatherContext);
@@ -31,15 +32,20 @@ const DailyForecast = () => {
   }, [lastCity, unit]);
 
   return (
-    <div className="daily-forecast">
-      <h3>5-day forecast</h3>
-      {forecast.map((f, i) => (
-        <div key={i} className="daily-item">
-          <p>{f.day}</p>
-          <p>{f.weather}</p>
-          <p>{Math.round(f.min)}° / {Math.round(f.max)}°</p>
-        </div>
-      ))}
+    <div className="forFlex">
+      <div className="daily-forecast">
+        <h3>5-day forecast</h3>
+        {forecast.map((f, i) => {
+          const icon = getWeatherIcon(f.weather);
+          return (
+            <div key={i} className="daily-item">
+              <p>{f.day}</p>
+              <img src={icon} alt={f.weather} className="weather-icon" />
+              <p>{Math.round(f.min)}° / {Math.round(f.max)}°</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

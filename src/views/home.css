@@ -1,0 +1,7 @@
+.weather-container {
+    display: flex;
+    align-items: flex-end; /* para alinear al principio verticalmente */
+    gap: 1vw; /* separación entre ambos */
+    padding: 1vw;
+  }
+  

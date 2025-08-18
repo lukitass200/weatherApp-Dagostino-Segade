@@ -1,24 +1,36 @@
 .hourly-forecast {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 10px 0;
-  }
-  
-  .hourly-forecast::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .hourly-forecast div {
-    background: var(--card-bg);
-    border-radius: 10px;
-    padding: 12px;
-    min-width: 80px;
-    text-align: center;
-  }
-  
-  .hourly-forecast p {
-    font-size: 14px;
-    margin: 4px 0;
-  }
-  
+  display: flex;
+  gap: 2vw;
+  overflow-x: auto;
+  padding: 1vw;
+  margin-left: 3vw;
+}
+
+.hourly-forecast::-webkit-scrollbar {
+  display: none;
+}
+
+.hourly-forecast div {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.hourly-forecast p {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.card1 {
+  width: 6vw;
+  height: 10vw;
+}
+
+.card1 .weather-icon {
+  width: 4vw;
+  height: 4vw;
+  margin: 0.5vw auto;
+  display: block;
+}
