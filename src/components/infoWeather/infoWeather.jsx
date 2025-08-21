@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { getWeatherIcon } from "../../utils/getWeatherIcon";
+import viento from "../../assets/wind.png";
 import "./infoWeather.css";
 
 const InfoWeather = () => {
@@ -16,14 +17,31 @@ const InfoWeather = () => {
     <div className="info-weather">
       {/* Card principal */}
       <div className="main-card">
-        <h2>{city || weatherData.name}</h2>
-        <p>{new Date(mainWeather.dt * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
-        <img src={getWeatherIcon(mainWeather.weather[0].main)} alt={mainWeather.weather[0].main} />
-        <h1>{Math.round(mainWeather.main.temp)}°</h1>
-        <p>{mainWeather.weather[0].description}</p>
-        <p>Feel like: {Math.round(mainWeather.main.feels_like)}°</p>
-        <p>Wind: {mainWeather.wind.speed} m/s</p>
-        <p>Min: {Math.round(mainWeather.main.temp_min)}° → Max: {Math.round(mainWeather.main.temp_max)}°</p>
+        <div className="top-row">
+          <h2 className=" city">{city || weatherData.name}</h2>
+          <p>{new Date(mainWeather.dt * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+        </div>
+
+        <div className="weather-info">
+          
+          <div className="weather-type">
+          <h1 className="temp">{Math.round(mainWeather.main.temp)}°</h1>
+            <img src={getWeatherIcon(mainWeather.weather[0].main)} alt={mainWeather.weather[0].main} />
+            <p>{mainWeather.weather[0].main}</p>
+            <p className="feel-like">Feel like: {Math.round(mainWeather.main.feels_like)}°C</p>
+          </div>
+
+        
+
+          <div className="wind-info">
+            <img src={viento} alt="Wind icon" className="wind-icon" />
+            <p>{mainWeather.wind.speed} m/s</p>
+          </div>
+        </div>
+
+        <p className="temp-range">
+          {Math.round(mainWeather.main.temp_min)}° to {Math.round(mainWeather.main.temp_max)}°
+        </p>
       </div>
 
       {/* Cards de horas */}
