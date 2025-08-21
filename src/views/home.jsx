@@ -8,12 +8,6 @@ import './home.css'
 const Home = () => {
   return (
     <div className="home">
-      <header>
-        <h1>Weather App</h1>
-      </header>
-
- 
-      <ToggleUnit /> <SearchBar />
       <div className="weather-container">
         <CurrentWeather />
         <HourlyForecast />

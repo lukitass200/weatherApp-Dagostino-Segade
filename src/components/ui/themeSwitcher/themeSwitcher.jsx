@@ -1,6 +1,6 @@
 
 import { useContext } from "react";
-import { WeatherContext } from "../../context/weatherContext";
+import { WeatherContext } from "../../../context/weatherContext";
 import './themeSwitcher.css'
 
 const ThemeSwitcher = () => {

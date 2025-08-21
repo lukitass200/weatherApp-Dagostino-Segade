@@ -3,10 +3,12 @@ import { WeatherContext } from "../../context/weatherContext";
 import { getHourlyForecast } from "../../services/weatherApi";
 import "./dailyForecast.css";
 import { getWeatherIcon } from "../../utils/getWeatherIcon.js";
+import { useNavigate } from "react-router-dom";
 
 const DailyForecast = () => {
   const { unit, lastCity } = useContext(WeatherContext);
   const [forecast, setForecast] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getHourlyForecast(lastCity, unit).then((data) => {
@@ -24,12 +26,16 @@ const DailyForecast = () => {
         const min = Math.min(...temps);
         const max = Math.max(...temps);
         const weather = grouped[day][0].weather[0].main;
-        return { day, min, max, weather };
+        return { day, min, max, weather, items: grouped[day] };
       });
 
       setForecast(result);
     });
   }, [lastCity, unit]);
+
+  const handleClick = (dayData) => {
+    navigate("/infoWeather", { state: { city: lastCity, weatherData: { list: dayData.items } } });
+  };
 
   return (
     <div className="forFlex">
@@ -38,7 +44,12 @@ const DailyForecast = () => {
         {forecast.map((f, i) => {
           const icon = getWeatherIcon(f.weather);
           return (
-            <div key={i} className="daily-item">
+            <div
+              key={i}
+              className="daily-item"
+              onClick={() => handleClick(f)}
+              style={{ cursor: "pointer" }}
+            >
               <p>{f.day}</p>
               <img src={icon} alt={f.weather} className="weather-icon" />
               <p>{Math.round(f.min)}° / {Math.round(f.max)}°</p>
