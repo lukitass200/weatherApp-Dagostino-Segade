@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { WeatherContext } from "../../../context/weatherContext";
-import "./toggleUnit.css"
+import "./toggleUnit.css";
 
 const ToggleUnit = () => {
   const { unit, toggleUnit } = useContext(WeatherContext);

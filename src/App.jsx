@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/ui/header/header";
 import Home from "../src/views/home";
 import CityDetails from "../src/views/cityDetails";
-import Favorites from "../src/views/favourites";
+import Favorites from "../src/components/favourites/favourites"
 import InfoWeather from "./components/infoWeather/infoWeather";
 
 function App() {

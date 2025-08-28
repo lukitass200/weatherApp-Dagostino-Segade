@@ -1,17 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { WeatherContext } from "../../context/weatherContext";
 import { getHourlyForecast } from "../../services/weatherApi";
-import './hourlyForecast.css';
 import { getWeatherIcon } from "../../utils/getWeatherIcon";
+import './hourlyForecast.css';
 
 const HourlyForecast = () => {
   const { unit, lastCity } = useContext(WeatherContext);
   const [forecast, setForecast] = useState([]);
 
   useEffect(() => {
-    getHourlyForecast(lastCity, unit).then((data) =>
-      setForecast(data.list.slice(0, 8)) // primeras 8 → 24hs (3h intervalos)
-    );
+    getHourlyForecast(lastCity, unit).then((data) => {
+      setForecast(data.list.slice(0, 8));
+      console.log(forecast)
+      
+    });
   }, [lastCity, unit]);
 
   return (

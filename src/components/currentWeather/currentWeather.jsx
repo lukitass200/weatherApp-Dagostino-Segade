@@ -1,44 +1,30 @@
 import { useContext, useEffect, useState } from "react";
 import { WeatherContext } from "../../context/weatherContext";
-import { getCurrentWeather, getWeatherByCoords, getHourlyForecast } from "../../services/weatherApi";
-import "./CurrentWeather.css";
-import { getWeatherIcon } from "../../utils/getWeatherIcon.js";
+import { getWeatherByCoords, getHourlyForecast } from "../../services/weatherApi";
+import { getWeatherIcon } from "../../utils/getWeatherIcon";
 import { useNavigate } from "react-router-dom";
+import "./CurrentWeather.css";
 
 const CurrentWeather = () => {
-  const { unit, lastCity, setLastCity } = useContext(WeatherContext);
+  const { unit, coords, setLastCity } = useContext(WeatherContext);
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          try {
-            const { latitude, longitude } = pos.coords;
-            const data = await getWeatherByCoords(latitude, longitude, unit);
-            setWeather(data);
-            setLastCity(data.name);
-          } catch (err) {
-            fallbackToLastCity();
-          }
-        },
-        () => fallbackToLastCity()
-      );
-    } else {
-      fallbackToLastCity();
-    }
-
-    const fallbackToLastCity = async () => {
+    const fetchWeather = async () => {
       try {
-        const data = await getCurrentWeather(lastCity, unit);
-        setWeather(data);
+        if (coords) {
+          const data = await getWeatherByCoords(coords.latitude, coords.longitude, unit);
+          setWeather(data);
+          setLastCity(data.name);
+        }
       } catch (err) {
         setError("No se pudo obtener el clima 😢");
       }
     };
-  }, [unit]);
+    fetchWeather();
+  }, [coords, unit]);
 
   if (error) return <p>{error}</p>;
   if (!weather) return <p>Loading...</p>;
@@ -47,12 +33,12 @@ const CurrentWeather = () => {
 
   const handleClick = async () => {
     try {
-      // 🚀 Pedimos también el forecast por horas de la ciudad actual
       const forecast = await getHourlyForecast(weather.name, unit);
-      navigate("/infoWeather", { state: { city: weather.name, weatherData: forecast } });
+      navigate("/infoWeather", {
+        state: { city: weather.name, weatherData: forecast }
+      });
     } catch (err) {
       console.error("Error obteniendo forecast por horas:", err);
-      navigate("/infoWeather", { state: { city: weather.name, weatherData: { list: [] } } });
     }
   };
 

@@ -1,6 +1,7 @@
 import CurrentWeather from "../components/currentWeather/currentWeather.jsx";
 import HourlyForecast from "../components/hourlyForecast/hourlyForecast.jsx";
 import DailyForecast from "../components/dailyForecast/dailyForecast";
+import Favorites from "../components/favourites/favourites.jsx";
 import SearchBar from "../components/ui/searchBar/searchBar.jsx";
 import ToggleUnit from "../components/ui/toggleUnit/toggleUnit";
 import './home.css'
@@ -12,7 +13,10 @@ const Home = () => {
         <CurrentWeather />
         <HourlyForecast />
       </div>
+      <div className="weather-container">
+      <Favorites/>
       <DailyForecast />
+      </div>
     </div>
   );
 };

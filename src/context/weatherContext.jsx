@@ -1,23 +1,41 @@
+// weatherContext.js
+
 import { createContext, useState, useEffect } from "react";
+import { getWeatherByCoords } from "../services/weatherApi";
 
 export const WeatherContext = createContext();
 
 export const WeatherProvider = ({ children }) => {
-  const [unit, setUnit] = useState("metric"); // metric = °C, imperial = °F
-  const [lastCity, setLastCity] = useState("Helsinki");
-  const [theme, setTheme] = useState("dark"); // opcional
+  const [unit, setUnit] = useState("metric");
+  const [lastCity, setLastCity] = useState("Buenos Aires");
+  const [coords, setCoords] = useState(null);
 
   const toggleUnit = () => {
-    setUnit((prev) => (prev === "metric" ? "imperial" : "metric"));
+    setUnit((prevUnit) => (prevUnit === "metric" ? "imperial" : "metric"));
   };
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        setCoords({ latitude, longitude });
+      },
+      (err) => {
+        console.error("No se pudo obtener ubicación:", err);
+      }
+    );
+  }, []);
 
   return (
     <WeatherContext.Provider
-      value={{ unit, toggleUnit, lastCity, setLastCity, theme, toggleTheme }}
+      value={{
+        unit,
+        setUnit,
+        toggleUnit, // ✅ ahora está disponible para ToggleUnit
+        lastCity,
+        setLastCity,
+        coords,
+      }}
     >
       {children}
     </WeatherContext.Provider>

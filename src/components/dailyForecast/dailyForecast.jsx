@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { WeatherContext } from "../../context/weatherContext";
 import { getHourlyForecast } from "../../services/weatherApi";
-import "./dailyForecast.css";
-import { getWeatherIcon } from "../../utils/getWeatherIcon.js";
+import { getWeatherIcon } from "../../utils/getWeatherIcon";
 import { useNavigate } from "react-router-dom";
+import "./dailyForecast.css";
 
 const DailyForecast = () => {
   const { unit, lastCity } = useContext(WeatherContext);
@@ -34,7 +34,9 @@ const DailyForecast = () => {
   }, [lastCity, unit]);
 
   const handleClick = (dayData) => {
-    navigate("/infoWeather", { state: { city: lastCity, weatherData: { list: dayData.items } } });
+    navigate("/infoWeather", {
+      state: { city: lastCity, weatherData: { list: dayData.items } }
+    });
   };
 
   return (
@@ -44,12 +46,7 @@ const DailyForecast = () => {
         {forecast.map((f, i) => {
           const icon = getWeatherIcon(f.weather);
           return (
-            <div
-              key={i}
-              className="daily-item"
-              onClick={() => handleClick(f)}
-              style={{ cursor: "pointer" }}
-            >
+            <div key={i} className="daily-item" onClick={() => handleClick(f)} style={{ cursor: "pointer" }}>
               <p>{f.day}</p>
               <img src={icon} alt={f.weather} className="weather-icon" />
               <p>{Math.round(f.min)}° / {Math.round(f.max)}°</p>
